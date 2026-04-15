@@ -93,7 +93,7 @@ export const projects: Project[] = [
   // },
   {
     title: 'UPEVA - União pela vida animal',
-    description: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG.',
+    description: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG - Ainda em desenvolvimento.',
     tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Storage, Functions)'],
     github: 'https://github.com/PedroBolson/Upeva',
     live: 'https://upevapets.web.app',
@@ -101,7 +101,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Eco Recicla - Plataforma de Reciclagem Inteligente',
-    description: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO para faculdade.',
+    description: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO.',
     tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
     github: 'https://github.com/PedroBolson/Interface-Reciclagem',
     live: 'https://recicla-caxias.web.app',

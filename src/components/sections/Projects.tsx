@@ -3,6 +3,22 @@ import { HiArrowTopRightOnSquare } from 'react-icons/hi2'
 import { SiGithub } from 'react-icons/si'
 import { projects, personal } from '../../data/portfolio'
 
+function BrowserChrome({ url }: { url?: string }) {
+  const displayUrl = url ? url.replace(/^https?:\/\//, '') : 'localhost:5173'
+  return (
+    <div className="absolute top-0 left-0 right-0 z-10 flex items-center gap-2 px-3 h-7 bg-surface/90 backdrop-blur-sm border-b border-border">
+      <div className="flex items-center gap-1.5 shrink-0">
+        <span className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
+      </div>
+      <div className="flex-1 mx-2 px-2.5 py-0.5 rounded bg-surface2 border border-border text-[10px] font-mono text-muted truncate text-center">
+        {displayUrl}
+      </div>
+    </div>
+  )
+}
+
 export default function Projects() {
   const hasProjects = projects.length > 0
 
@@ -29,22 +45,24 @@ export default function Projects() {
         {hasProjects ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, i) => (
-              <motion.article
-                key={project.title}
-                className="group flex flex-col rounded-2xl bg-surface border border-border overflow-hidden hover:border-brand/40 transition-all duration-300"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              >
+              /* Wrapper CSS para o hover translate — separado do motion para
+                 evitar conflito de y entre whileInView e whileHover */
+              <div key={project.title} className="group hover:-translate-y-1.5 transition-transform duration-200">
+                <motion.article
+                  className="flex flex-col h-full rounded-2xl bg-surface border border-border overflow-hidden hover:border-brand/40 transition-colors duration-300"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                >
                 {/* Imagem do projeto */}
                 {project.image && (
-                  <div className="aspect-video overflow-hidden bg-surface2">
+                  <div className="relative aspect-video overflow-hidden bg-surface2">
+                    <BrowserChrome url={project.live} />
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 )}
@@ -93,7 +111,8 @@ export default function Projects() {
                     )}
                   </div>
                 </div>
-              </motion.article>
+                </motion.article>
+              </div>
             ))}
           </div>
         ) : (
