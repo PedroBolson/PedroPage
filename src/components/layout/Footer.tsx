@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { personal } from '../../data/portfolio'
@@ -31,6 +32,7 @@ function CoffeeCup() {
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const { t } = useTranslation()
 
   return (
     <footer className="border-t border-border py-8">
@@ -62,7 +64,10 @@ export default function Footer() {
         </div>
 
         <span className="text-xs text-muted">
-          Feito do zero, com café<CoffeeCup /> e TypeScript
+          {(() => {
+            const [before, after] = t('footer.tagline').split('{cup}')
+            return <>{before}<CoffeeCup />{after}</>
+          })()}
         </span>
 
       </div>

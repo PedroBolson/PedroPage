@@ -4,6 +4,7 @@ import { Parallax } from 'react-scroll-parallax'
 import { HiArrowDown } from 'react-icons/hi2'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 import ParticleBackground from '../effects/ParticleBackground'
 import { personal } from '../../data/portfolio'
 import { scrollToSection } from '../../utils/scroll'
@@ -20,6 +21,8 @@ const lineVariants: Variants = {
 }
 
 export default function Hero() {
+  const { t } = useTranslation()
+
   return (
     <section
       id="hero"
@@ -46,7 +49,7 @@ export default function Hero() {
             variants={lineVariants}
             className="font-mono text-sm md:text-base text-muted tracking-[0.25em] uppercase"
           >
-            {personal.greeting}
+            {t('personal.greeting')}
           </motion.p>
 
           <motion.h1
@@ -60,14 +63,14 @@ export default function Hero() {
             variants={lineVariants}
             className="text-xl md:text-2xl font-semibold text-muted"
           >
-            {personal.title}
+            {t('personal.title')}
           </motion.h2>
 
           <motion.p
             variants={lineVariants}
             className="max-w-md text-sm md:text-base text-muted leading-relaxed mt-2"
           >
-            {personal.description}
+            {t('personal.description')}
           </motion.p>
 
           {/* CTAs */}
@@ -106,7 +109,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.5 }}
       >
-        <span className="text-xs font-mono tracking-widest uppercase">scroll</span>
+        <span className="text-xs font-mono tracking-widest uppercase">{t('hero.scroll')}</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}

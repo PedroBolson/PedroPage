@@ -2,6 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ParallaxProvider } from 'react-scroll-parallax'
 import './styles/main.css'
+import './i18n'
+import 'flag-icons/css/flag-icons.min.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

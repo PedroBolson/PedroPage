@@ -1,19 +1,20 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import TechCard from '../ui/TechCard'
 import { skills } from '../../data/portfolio'
 import type { SkillCategory } from '../../types'
 
-const CATEGORIES: { key: SkillCategory | 'all'; label: string }[] = [
-  { key: 'all',        label: 'Todas'          },
-  { key: 'languages',  label: 'Linguagens'     },
-  { key: 'frameworks', label: 'Frameworks'     },
-  { key: 'databases',  label: 'Databases'      },
-  { key: 'devops',     label: 'Cloud & DevOps' },
-]
+const CATEGORY_KEYS: (SkillCategory | 'all')[] = ['all', 'languages', 'frameworks', 'databases', 'devops']
 
 export default function Skills() {
   const [active, setActive] = useState<SkillCategory | 'all'>('all')
+  const { t } = useTranslation()
+
+  const categories = useMemo(
+    () => CATEGORY_KEYS.map(key => ({ key, label: t(`skills.filters.${key}`) })),
+    [t]
+  )
 
   const filtered = active === 'all'
     ? skills
@@ -31,10 +32,10 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
         >
           <p className="font-mono text-xs tracking-[0.3em] uppercase text-muted mb-3">
-            Resumo completo
+            {t('skills.eyebrow')}
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-gradient">
-            Tech Stack
+            {t('skills.heading')}
           </h2>
         </motion.div>
 
@@ -46,7 +47,7 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button
               key={cat.key}
               onClick={() => setActive(cat.key)}
@@ -78,7 +79,7 @@ export default function Skills() {
                 layout
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{    opacity: 0, scale: 0.85 }}
+                exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.22, delay: i * 0.03 }}
               >
                 <TechCard skill={skill} index={i} />

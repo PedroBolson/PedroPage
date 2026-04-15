@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Home",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "scroll": "scroll"
+  },
+  "showcase": {
+    "label": "Tech Stack",
+    "hint": "scroll to explore",
+    "chapters": {
+      "languages": {
+        "label": "Languages",
+        "subtitle": "The foundation of everything"
+      },
+      "frameworks": {
+        "label": "Frameworks",
+        "subtitle": "Daily tools"
+      },
+      "databases": {
+        "label": "Databases",
+        "subtitle": "Where data lives"
+      },
+      "devops": {
+        "label": "Cloud & DevOps",
+        "subtitle": "Infrastructure & scale"
+      }
+    }
+  },
+  "skills": {
+    "eyebrow": "Full overview",
+    "heading": "Tech Stack",
+    "filters": {
+      "all": "All",
+      "languages": "Languages",
+      "frameworks": "Frameworks",
+      "databases": "Databases",
+      "devops": "Cloud & DevOps"
+    }
+  },
+  "badge": {
+    "daily": "Daily Use",
+    "projects": "Projects",
+    "exploring": "Exploring",
+    "studying": "Studying"
+  },
+  "projects": {
+    "eyebrow": "Portfolio",
+    "heading": "Featured Projects",
+    "empty": "Projects coming soon.",
+    "emptyGithub": "In the meantime, check my",
+    "cta": "See more of my work",
+    "ctaBtn": "View GitHub",
+    "code": "Code",
+    "live": "Live Site"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "heading": "Let's talk?",
+    "body": "I'm open to new opportunities, projects and collaborations. If you have something in mind, reach out!",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "send": "Send"
+  },
+  "techFlying": {
+    "eyebrow": "Tech Universe",
+    "heading1": "Tools I master",
+    "heading2": "every single day"
+  },
+  "footer": {
+    "tagline": "Built from scratch, with coffee{cup} and TypeScript"
+  },
+  "personal": {
+    "greeting": "Hi, I'm",
+    "title": "Full Stack Developer",
+    "description": "Building innovative web and mobile solutions focused on user experience and performance."
+  }
+}

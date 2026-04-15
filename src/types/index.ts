@@ -12,9 +12,11 @@ export interface Skill {
   category: SkillCategory
 }
 
+export type Locale = 'pt' | 'en' | 'es'
+
 export interface Project {
   title: string
-  description: string
+  descriptions: Record<Locale, string>
   tech: string[]
   github?: string
   live?: string

@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import { HiEnvelope, HiClipboard, HiCheck } from 'react-icons/hi2'
 import { personal } from '../../data/portfolio'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
+  const { t } = useTranslation()
 
   const copyEmail = () => {
     navigator.clipboard.writeText(personal.email)
@@ -15,7 +17,6 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-24 px-6 overflow-hidden">
 
-      {/* Fundo com gradiente radial sutil */}
       <div className="absolute inset-0 bg-radial-[ellipse_at_bottom] from-brand/8 via-transparent to-transparent pointer-events-none" />
 
       <div className="relative max-w-2xl mx-auto text-center">
@@ -28,16 +29,15 @@ export default function Contact() {
           className="flex flex-col items-center gap-6"
         >
           <p className="font-mono text-xs tracking-[0.3em] uppercase text-muted">
-            Contato
+            {t('contact.eyebrow')}
           </p>
 
           <h2 className="text-3xl md:text-5xl font-black text-gradient">
-            Vamos conversar?
+            {t('contact.heading')}
           </h2>
 
           <p className="text-muted leading-relaxed max-w-md">
-            Estou aberto a novas oportunidades, projetos e colaborações.
-            Se você tem algo em mente, entre em contato!
+            {t('contact.body')}
           </p>
 
           {/* Card de email */}
@@ -46,17 +46,14 @@ export default function Contact() {
             whileHover={{ borderColor: 'rgba(var(--color-brand), 0.3)' }}
             transition={{ duration: 0.3 }}
           >
-            {/* Ícone */}
             <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center">
               <HiEnvelope size={22} className="text-brand" />
             </div>
 
-            {/* Endereço */}
             <p className="font-mono text-sm md:text-base text-foreground tracking-wide select-all">
               {personal.email}
             </p>
 
-            {/* Ações */}
             <div className="flex gap-3 w-full">
               <motion.button
                 onClick={copyEmail}
@@ -64,8 +61,8 @@ export default function Contact() {
                 whileTap={{ scale: 0.97 }}
               >
                 {copied
-                  ? <><HiCheck size={16} className="text-emerald-400" /> Copiado!</>
-                  : <><HiClipboard size={16} /> Copiar</>
+                  ? <><HiCheck size={16} className="text-emerald-400" /> {t('contact.copied')}</>
+                  : <><HiClipboard size={16} /> {t('contact.copy')}</>
                 }
               </motion.button>
 
@@ -75,7 +72,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.97 }}
               >
                 <HiEnvelope size={16} />
-                Enviar
+                {t('contact.send')}
               </motion.a>
             </div>
           </motion.div>

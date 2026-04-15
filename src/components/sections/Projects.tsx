@@ -1,7 +1,8 @@
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import { HiArrowTopRightOnSquare } from 'react-icons/hi2'
 import { SiGithub } from 'react-icons/si'
-import { projects, personal } from '../../data/portfolio'
+import { getProjects, personal } from '../../data/portfolio'
 
 function BrowserChrome({ url }: { url?: string }) {
   const displayUrl = url ? url.replace(/^https?:\/\//, '') : 'localhost:5173'
@@ -20,6 +21,8 @@ function BrowserChrome({ url }: { url?: string }) {
 }
 
 export default function Projects() {
+  const { t, i18n } = useTranslation()
+  const projects = getProjects(i18n.language)
   const hasProjects = projects.length > 0
 
   return (
@@ -35,10 +38,10 @@ export default function Projects() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="font-mono text-xs tracking-[0.3em] uppercase text-muted mb-3">
-            Portfólio
+            {t('projects.eyebrow')}
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-gradient">
-            Projetos em Destaque
+            {t('projects.heading')}
           </h2>
         </motion.div>
 
@@ -96,7 +99,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-brand transition-colors"
                       >
-                        <SiGithub size={15} /> Código
+                        <SiGithub size={15} /> {t('projects.code')}
                       </a>
                     )}
                     {project.live && (
@@ -106,7 +109,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent transition-colors"
                       >
-                        <HiArrowTopRightOnSquare size={15} /> Ver Site
+                        <HiArrowTopRightOnSquare size={15} /> {t('projects.live')}
                       </a>
                     )}
                   </div>
@@ -128,8 +131,8 @@ export default function Projects() {
               <SiGithub size={28} className="text-brand" />
             </div>
             <p className="text-muted text-sm text-center max-w-xs">
-              Projetos chegando em breve. <br />
-              Enquanto isso, confira meu{' '}
+              {t('projects.empty')} <br />
+              {t('projects.emptyGithub')}{' '}
               <a
                 href={personal.github}
                 target="_blank"
@@ -152,7 +155,7 @@ export default function Projects() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <p className="text-muted text-sm">
-            Conheça mais do meu trabalho
+            {t('projects.cta')}
           </p>
           <motion.a
             href={personal.github}
@@ -163,7 +166,7 @@ export default function Projects() {
             whileTap={{ scale: 0.98 }}
           >
             <SiGithub size={18} />
-            Ver GitHub
+            {t('projects.ctaBtn')}
           </motion.a>
         </motion.div>
 

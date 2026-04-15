@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Início",
+    "skills": "Habilidades",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "scroll": "scroll"
+  },
+  "showcase": {
+    "label": "Tech Stack",
+    "hint": "scroll para explorar",
+    "chapters": {
+      "languages": {
+        "label": "Linguagens",
+        "subtitle": "A base de tudo"
+      },
+      "frameworks": {
+        "label": "Frameworks",
+        "subtitle": "Ferramentas do dia a dia"
+      },
+      "databases": {
+        "label": "Databases",
+        "subtitle": "Onde os dados vivem"
+      },
+      "devops": {
+        "label": "Cloud & DevOps",
+        "subtitle": "Infraestrutura e escala"
+      }
+    }
+  },
+  "skills": {
+    "eyebrow": "Resumo completo",
+    "heading": "Tech Stack",
+    "filters": {
+      "all": "Todas",
+      "languages": "Linguagens",
+      "frameworks": "Frameworks",
+      "databases": "Databases",
+      "devops": "Cloud & DevOps"
+    }
+  },
+  "badge": {
+    "daily": "Uso Diário",
+    "projects": "Projetos",
+    "exploring": "Explorando",
+    "studying": "Estudando"
+  },
+  "projects": {
+    "eyebrow": "Portfólio",
+    "heading": "Projetos em Destaque",
+    "empty": "Projetos chegando em breve.",
+    "emptyGithub": "Enquanto isso, confira meu",
+    "cta": "Conheça mais do meu trabalho",
+    "ctaBtn": "Ver GitHub",
+    "code": "Código",
+    "live": "Ver Site"
+  },
+  "contact": {
+    "eyebrow": "Contato",
+    "heading": "Vamos conversar?",
+    "body": "Estou aberto a novas oportunidades, projetos e colaborações. Se você tem algo em mente, entre em contato!",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "send": "Enviar"
+  },
+  "techFlying": {
+    "eyebrow": "Tech Universe",
+    "heading1": "Ferramentas que",
+    "heading2": "domino no dia a dia"
+  },
+  "footer": {
+    "tagline": "Feito do zero, com café{cup} e TypeScript"
+  },
+  "personal": {
+    "greeting": "Olá, eu sou",
+    "title": "Desenvolvedor Full Stack",
+    "description": "Criando soluções web e mobile inovadoras com foco em experiência de usuário e performance."
+  }
+}

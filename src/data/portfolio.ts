@@ -17,15 +17,12 @@ import { TbApi, TbDatabase, TbBrandReactNative } from 'react-icons/tb'
 import { BiCodeAlt } from 'react-icons/bi'
 import { SiDotnet } from 'react-icons/si'
 
-import type { Skill, Project, Social } from '../types'
+import type { Skill, Project, Social, Locale } from '../types'
 
 // ─── Informações pessoais ──────────────────────────────────────────────────────
 
 export const personal = {
   name: 'Pedro Bolson',
-  greeting: 'Olá, eu sou',
-  title: 'Desenvolvedor Full Stack',
-  description: 'Criando soluções web e mobile inovadoras com foco em experiência de usuário e performance.',
   github: 'https://github.com/PedroBolson',
   linkedin: 'https://www.linkedin.com/in/pedro-bolson-086a03337',
   email: 'pedbolson@gmail.com',
@@ -85,7 +82,11 @@ export const projects: Project[] = [
   // Exemplo de estrutura — descomente e preencha quando quiser:
   // {
   //   title: 'Nome do Projeto',
-  //   description: 'Descrição curta do que o projeto faz e qual problema resolve.',
+  //   descriptions: {
+  //     pt: 'Descrição em português.',
+  //     en: 'Description in English.',
+  //     es: 'Descripción en español.',
+  //   },
   //   tech: ['React', 'Node.js', 'PostgreSQL'],
   //   github: 'https://github.com/PedroBolson/nome-repo',
   //   live: 'https://projeto.vercel.app',
@@ -93,7 +94,11 @@ export const projects: Project[] = [
   // },
   {
     title: 'UPEVA - União pela vida animal',
-    description: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG - Ainda em desenvolvimento.',
+    descriptions: {
+      pt: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG - Ainda em desenvolvimento.',
+      en: 'Web platform for animal listings, adoption applications and internal NGO operations - Still in development.',
+      es: 'Plataforma web para publicación de animales, solicitudes de adopción y operación interna de la ONG - Aún en desarrollo.',
+    },
     tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Storage, Functions)'],
     github: 'https://github.com/PedroBolson/Upeva',
     live: 'https://upevapets.web.app',
@@ -101,7 +106,11 @@ export const projects: Project[] = [
   },
   {
     title: 'Eco Recicla - Plataforma de Reciclagem Inteligente',
-    description: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO.',
+    descriptions: {
+      pt: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO.',
+      en: 'Web platform that gamifies recycling, letting users earn points for sustainable actions - DEMO project.',
+      es: 'Plataforma web que gamifica el reciclaje, permitiendo que los usuarios ganen puntos por acciones sostenibles - Proyecto DEMO.',
+    },
     tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
     github: 'https://github.com/PedroBolson/Interface-Reciclagem',
     live: 'https://recicla-caxias.web.app',
@@ -128,3 +137,10 @@ export const flyingTechs = [
   { name: 'Python', icon: SiPython, color: '#3776AB' },
   { name: 'Vite', icon: SiVite, color: '#646CFF' },
 ]
+
+// ─── Helper para localizar descrições dos projetos ────────────────────────────
+
+export function getProjects(lang: string) {
+  const l: Locale = (['pt', 'en', 'es'].includes(lang) ? lang : 'pt') as Locale
+  return projects.map(p => ({ ...p, description: p.descriptions[l] }))
+}

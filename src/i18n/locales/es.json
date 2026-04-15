@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "scroll": "scroll"
+  },
+  "showcase": {
+    "label": "Tech Stack",
+    "hint": "scroll para explorar",
+    "chapters": {
+      "languages": {
+        "label": "Lenguajes",
+        "subtitle": "La base de todo"
+      },
+      "frameworks": {
+        "label": "Frameworks",
+        "subtitle": "Herramientas del día a día"
+      },
+      "databases": {
+        "label": "Bases de Datos",
+        "subtitle": "Donde viven los datos"
+      },
+      "devops": {
+        "label": "Cloud & DevOps",
+        "subtitle": "Infraestructura y escala"
+      }
+    }
+  },
+  "skills": {
+    "eyebrow": "Resumen completo",
+    "heading": "Tech Stack",
+    "filters": {
+      "all": "Todas",
+      "languages": "Lenguajes",
+      "frameworks": "Frameworks",
+      "databases": "Bases de Datos",
+      "devops": "Cloud & DevOps"
+    }
+  },
+  "badge": {
+    "daily": "Uso Diario",
+    "projects": "Proyectos",
+    "exploring": "Explorando",
+    "studying": "Estudiando"
+  },
+  "projects": {
+    "eyebrow": "Portafolio",
+    "heading": "Proyectos Destacados",
+    "empty": "Proyectos próximamente.",
+    "emptyGithub": "Mientras tanto, revisa mi",
+    "cta": "Conoce más de mi trabajo",
+    "ctaBtn": "Ver GitHub",
+    "code": "Código",
+    "live": "Ver Sitio"
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "heading": "¿Hablamos?",
+    "body": "Estoy abierto a nuevas oportunidades, proyectos y colaboraciones. ¡Si tienes algo en mente, contáctame!",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "send": "Enviar"
+  },
+  "techFlying": {
+    "eyebrow": "Tech Universe",
+    "heading1": "Herramientas que",
+    "heading2": "domino cada día"
+  },
+  "footer": {
+    "tagline": "Hecho desde cero, con café{cup} y TypeScript"
+  },
+  "personal": {
+    "greeting": "Hola, soy",
+    "title": "Desarrollador Full Stack",
+    "description": "Creando soluciones web y móviles innovadoras con foco en experiencia de usuario y rendimiento."
+  }
+}

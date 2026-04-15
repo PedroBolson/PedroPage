@@ -1,5 +1,6 @@
 import { Parallax } from 'react-scroll-parallax'
 import { motion } from 'motion/react'
+import { useTranslation } from 'react-i18next'
 import { flyingTechs } from '../../data/portfolio'
 
 /**
@@ -9,23 +10,25 @@ import { flyingTechs } from '../../data/portfolio'
  * "passam" mais rápido enquanto os de speed baixo ficam "mais longe".
  */
 const PLACEMENTS = [
-  { top:  8, left:  5,  speed: -18, size: 52, opacity: 0.9  },
-  { top: 12, left: 78,  speed:  14, size: 64, opacity: 1.0  },
-  { top: 22, left: 28,  speed: -10, size: 44, opacity: 0.75 },
-  { top: 18, left: 55,  speed:  20, size: 56, opacity: 0.85 },
-  { top: 35, left:  8,  speed:  16, size: 48, opacity: 0.8  },
-  { top: 38, left: 70,  speed: -14, size: 60, opacity: 0.9  },
-  { top: 50, left: 20,  speed:  22, size: 40, opacity: 0.7  },
-  { top: 48, left: 46,  speed: -20, size: 72, opacity: 1.0  },
-  { top: 60, left: 85,  speed:  12, size: 50, opacity: 0.8  },
-  { top: 65, left:  2,  speed: -16, size: 58, opacity: 0.85 },
-  { top: 72, left: 62,  speed:  18, size: 46, opacity: 0.75 },
-  { top: 78, left: 35,  speed: -12, size: 66, opacity: 0.9  },
-  { top: 85, left: 15,  speed:  10, size: 42, opacity: 0.7  },
-  { top: 90, left: 88,  speed: -22, size: 54, opacity: 0.85 },
+  { top: 8, left: 5, speed: -18, size: 52, opacity: 0.9 },
+  { top: 12, left: 78, speed: 14, size: 64, opacity: 1.0 },
+  { top: 22, left: 28, speed: -10, size: 44, opacity: 0.75 },
+  { top: 18, left: 55, speed: 20, size: 56, opacity: 0.85 },
+  { top: 35, left: 8, speed: 16, size: 48, opacity: 0.8 },
+  { top: 38, left: 70, speed: -14, size: 60, opacity: 0.9 },
+  { top: 50, left: 20, speed: 22, size: 40, opacity: 0.7 },
+  { top: 48, left: 46, speed: -20, size: 72, opacity: 1.0 },
+  { top: 60, left: 85, speed: 12, size: 50, opacity: 0.8 },
+  { top: 65, left: 2, speed: -16, size: 58, opacity: 0.85 },
+  { top: 72, left: 62, speed: 18, size: 46, opacity: 0.75 },
+  { top: 78, left: 35, speed: -12, size: 66, opacity: 0.9 },
+  { top: 85, left: 15, speed: 10, size: 42, opacity: 0.7 },
+  { top: 90, left: 88, speed: -22, size: 54, opacity: 0.85 },
 ]
 
 export default function TechFlying() {
+  const { t } = useTranslation()
+
   return (
     <section className="relative overflow-hidden py-8" style={{ minHeight: '120vh' }}>
 
@@ -52,10 +55,10 @@ export default function TechFlying() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="font-mono text-xs tracking-[0.3em] uppercase text-muted mb-3">
-            Tech Universe
+            {t('techFlying.eyebrow')}
           </p>
           <h2 className="text-3xl md:text-5xl font-black text-gradient leading-tight">
-            Ferramentas que<br />domino no dia a dia
+            {t('techFlying.heading1')}<br />{t('techFlying.heading2')}
           </h2>
         </motion.div>
       </div>

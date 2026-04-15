@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { HiSun, HiMoon, HiBars3, HiXMark } from 'react-icons/hi2'
+import { useTranslation } from 'react-i18next'
+import { HiSun, HiMoon, HiBars3, HiXMark, HiChevronDown } from 'react-icons/hi2'
 import { useTheme } from '../../hooks/useTheme'
 import { scrollToSection } from '../../utils/scroll'
 
-const NAV_LINKS = [
-  { label: 'Início', href: '#hero' },
-  { label: 'Habilidades', href: '#skills' },
-  { label: 'Projetos', href: '#projects' },
-  { label: 'Contato', href: '#contact' },
+const NAV_KEYS = [
+  { key: 'home',     href: '#hero'     },
+  { key: 'skills',   href: '#skills'   },
+  { key: 'projects', href: '#projects' },
+  { key: 'contact',  href: '#contact'  },
 ]
 
 const TOTAL_STEPS = 10 // "edro " (5) + "olson" (5)
@@ -72,8 +73,79 @@ function LogoText() {
   )
 }
 
+const LANGS = [
+  { code: 'pt', label: 'Português', flag: 'br' },
+  { code: 'en', label: 'English',   flag: 'us' },
+  { code: 'es', label: 'Español',   flag: 'es' },
+] as const
+
+function LangPicker() {
+  const { i18n } = useTranslation()
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const current = LANGS.find(l => l.code === i18n.language) ?? LANGS[0]
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-label="Select language"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-muted hover:text-foreground hover:bg-surface2 transition-all duration-200"
+      >
+        <span className={`fi fi-${current.flag}`} style={{ fontSize: 14, borderRadius: 2 }} />
+        <span className="uppercase tracking-wide">{current.code}</span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          style={{ display: 'flex' }}
+        >
+          <HiChevronDown size={12} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="absolute right-0 top-full mt-1.5 w-36 bg-surface border border-border rounded-xl shadow-lg shadow-black/10 overflow-hidden z-50"
+            initial={{ opacity: 0, y: -6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.96 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+          >
+            {LANGS.map(lang => (
+              <button
+                key={lang.code}
+                onClick={() => { i18n.changeLanguage(lang.code); setOpen(false) }}
+                className={[
+                  'w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-left transition-colors duration-150',
+                  i18n.language === lang.code
+                    ? 'bg-brand/10 text-brand font-semibold'
+                    : 'text-muted hover:bg-surface2 hover:text-foreground',
+                ].join(' ')}
+              >
+                <span className={`fi fi-${lang.flag} shrink-0`} style={{ fontSize: 16, borderRadius: 2 }} />
+                <span>{lang.label}</span>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 export default function Header() {
   const { isDark, toggle } = useTheme()
+  const { t } = useTranslation()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -119,14 +191,14 @@ export default function Header() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          {NAV_LINKS.map(link => (
+          {NAV_KEYS.map(link => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleNav(e, link.href)}
               className="text-sm font-medium text-muted hover:text-brand transition-colors duration-200"
             >
-              {link.label}
+              {t(`nav.${link.key}`)}
             </a>
           ))}
         </motion.nav>
@@ -138,6 +210,11 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
+          {/* Seletor de idioma */}
+          <div className="hidden md:flex">
+            <LangPicker />
+          </div>
+
           {/* Dark mode toggle */}
           <button
             onClick={toggle}
@@ -179,16 +256,19 @@ export default function Header() {
             transition={{ duration: 0.2 }}
           >
             <nav className="flex flex-col gap-1 px-6 py-4">
-              {NAV_LINKS.map(link => (
+              {NAV_KEYS.map(link => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNav(e, link.href)}
                   className="py-2 text-sm font-medium text-muted hover:text-brand transition-colors"
                 >
-                  {link.label}
+                  {t(`nav.${link.key}`)}
                 </a>
               ))}
+              <div className="pt-3 pb-1 border-t border-border mt-2">
+                <LangPicker />
+              </div>
             </nav>
           </motion.div>
         )}
