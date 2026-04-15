@@ -10,7 +10,7 @@ export default defineConfig({
   build: {
     rolldownOptions: {
       output: {
-        advancedChunks: {
+        codeSplitting: {
           groups: [
             { name: 'react-vendor', test: /node_modules\/(react|react-dom)\// },
             { name: 'motion',       test: /node_modules\/motion\// },
