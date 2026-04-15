@@ -6,23 +6,26 @@ import { useTheme } from '../../hooks/useTheme'
 import { scrollToSection } from '../../utils/scroll'
 
 const NAV_KEYS = [
-  { key: 'home',     href: '#hero'     },
-  { key: 'skills',   href: '#skills'   },
+  { key: 'home', href: '#hero' },
+  { key: 'skills', href: '#skills' },
   { key: 'projects', href: '#projects' },
-  { key: 'contact',  href: '#contact'  },
+  { key: 'contact', href: '#contact' },
 ]
 
 const TOTAL_STEPS = 10 // "edro " (5) + "olson" (5)
 
 function getInner(count: number): { before: string; after: string } {
   if (count === 0) return { before: 'PB', after: '' }
-  if (count <= 5)  return { before: 'P' + 'edro '.slice(0, count), after: 'B' }
-  return             { before: 'Pedro B' + 'olson'.slice(0, count - 5), after: '' }
+  if (count <= 5) return { before: 'P' + 'edro '.slice(0, count), after: 'B' }
+  return { before: 'Pedro B' + 'olson'.slice(0, count - 5), after: '' }
 }
+
+// Toque não tem estado de hover — evita o expand em mobile que quebra a linha
+const isHoverDevice = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches
 
 function LogoText() {
   const [hovered, setHovered] = useState(false)
-  const [count, setCount]     = useState(0)
+  const [count, setCount] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -53,8 +56,8 @@ function LogoText() {
   return (
     <span
       className="inline-flex items-baseline"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => { if (isHoverDevice) setHovered(true) }}
+      onMouseLeave={() => { if (isHoverDevice) setHovered(false) }}
     >
       {'<'}
       <span>{before}</span>
@@ -75,8 +78,8 @@ function LogoText() {
 
 const LANGS = [
   { code: 'pt', label: 'Português', flag: 'br' },
-  { code: 'en', label: 'English',   flag: 'us' },
-  { code: 'es', label: 'Español',   flag: 'es' },
+  { code: 'en', label: 'English', flag: 'us' },
+  { code: 'es', label: 'Español', flag: 'es' },
 ] as const
 
 function LangPicker() {
@@ -211,7 +214,7 @@ export default function Header() {
           transition={{ duration: 0.5 }}
         >
           {/* Seletor de idioma */}
-          <div className="hidden md:flex">
+          <div className="flex">
             <LangPicker />
           </div>
 
@@ -266,9 +269,6 @@ export default function Header() {
                   {t(`nav.${link.key}`)}
                 </a>
               ))}
-              <div className="pt-3 pb-1 border-t border-border mt-2">
-                <LangPicker />
-              </div>
             </nav>
           </motion.div>
         )}

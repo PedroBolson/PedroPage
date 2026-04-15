@@ -6,7 +6,6 @@ import {
   useScroll,
   useTransform,
   useMotionValueEvent,
-  AnimatePresence,
   type MotionValue,
 } from 'motion/react'
 import { skills } from '../../data/portfolio'
@@ -20,11 +19,11 @@ const CHAPTER_META: {
   accent: string
   range: [number, number, number, number]
 }[] = [
-  { key: 'languages',  accent: '#3b82f6', range: [0.00, 0.05, 0.22, 0.27] },
-  { key: 'frameworks', accent: '#06b6d4', range: [0.24, 0.29, 0.46, 0.51] },
-  { key: 'databases',  accent: '#a855f7', range: [0.48, 0.53, 0.70, 0.75] },
-  { key: 'devops',     accent: '#f59e0b', range: [0.72, 0.77, 0.97, 1.00] },
-]
+    { key: 'languages', accent: '#3b82f6', range: [0.00, 0.05, 0.22, 0.27] },
+    { key: 'frameworks', accent: '#06b6d4', range: [0.24, 0.29, 0.46, 0.51] },
+    { key: 'databases', accent: '#a855f7', range: [0.48, 0.53, 0.70, 0.75] },
+    { key: 'devops', accent: '#f59e0b', range: [0.72, 0.77, 0.97, 1.00] },
+  ]
 
 type Chapter = typeof CHAPTER_META[0] & { label: string; subtitle: string }
 
@@ -84,8 +83,8 @@ function ChapterView({
     ? [yRange[0], yRange[1], yRange[2], 0]
     : yRange
 
-  const opacity    = useTransform(scrollProgress, [rs, re, xs, xe], opacityOut)
-  const y          = useTransform(scrollProgress, [rs, re, xs, xe], yOut)
+  const opacity = useTransform(scrollProgress, [rs, re, xs, xe], opacityOut)
+  const y = useTransform(scrollProgress, [rs, re, xs, xe], yOut)
   const titleScale = useTransform(scrollProgress, [rs, re], [1.06, 1])
 
   return (
@@ -115,30 +114,33 @@ function ChapterView({
       </motion.h2>
 
       <div className="flex flex-wrap gap-2 md:gap-3 max-w-3xl pointer-events-auto pr-8 md:pr-0">
-        <AnimatePresence>
-          {isActive && chapterSkills.map((skill, i) => {
-            const Icon = skill.icon
-            return (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, y: 20, scale: 0.92 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -12, scale: 0.95 }}
-                transition={{ duration: 0.3, delay: i * 0.04, ease: 'easeOut' }}
-                className="flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl backdrop-blur-sm border"
-                style={{ background: `${chapter.accent}12`, borderColor: `${chapter.accent}35` }}
-              >
-                <Icon size={18} style={{ color: skill.color, flexShrink: 0 }} />
-                <div className="flex flex-col gap-0.5 items-center">
-                  <span className="text-xs md:text-sm font-semibold text-foreground leading-none self-start">
-                    {skill.name}
-                  </span>
-                  <Badge level={skill.level} />
-                </div>
-              </motion.div>
-            )
-          })}
-        </AnimatePresence>
+        {/* Badges sempre montadas no DOM — visibilidade via animate prop.
+            Evita o race condition do iOS onde setActiveIndex chega tarde durante
+            inertia scroll, fazendo as skills "pularem" sem aparecer. */}
+        {chapterSkills.map((skill, i) => {
+          const Icon = skill.icon
+          return (
+            <motion.div
+              key={skill.name}
+              animate={{
+                opacity: isActive ? 1 : 0,
+                y: isActive ? 0 : 20,
+                scale: isActive ? 1 : 0.92,
+              }}
+              transition={{ duration: 0.3, delay: isActive ? i * 0.04 : 0, ease: 'easeOut' }}
+              className="flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl backdrop-blur-sm border"
+              style={{ background: `${chapter.accent}12`, borderColor: `${chapter.accent}35` }}
+            >
+              <Icon size={18} style={{ color: skill.color, flexShrink: 0 }} />
+              <div className="flex flex-col gap-0.5 items-center">
+                <span className="text-xs md:text-sm font-semibold text-foreground leading-none self-start">
+                  {skill.name}
+                </span>
+                <Badge level={skill.level} />
+              </div>
+            </motion.div>
+          )
+        })}
       </div>
     </motion.div>
   )
@@ -155,7 +157,7 @@ export default function ScrollShowcase() {
   const chapters = useMemo<Chapter[]>(() =>
     CHAPTER_META.map(c => ({
       ...c,
-      label:    t(`showcase.chapters.${c.key}.label`),
+      label: t(`showcase.chapters.${c.key}.label`),
       subtitle: t(`showcase.chapters.${c.key}.subtitle`),
     })),
     [t]
@@ -171,22 +173,29 @@ export default function ScrollShowcase() {
   const yRange: [number, number, number, number] = isMobile ? [24, 0, 0, -12] : [40, 0, 0, -28]
 
   useMotionValueEvent(scrollYProgress, 'change', latest => {
-    const found = chapters.findIndex((c, i) => {
+    // Itera de trás pra frente: o chapter que está ENTRANDO vence durante sobreposição.
+    // Para o último chapter, sem limite superior — overscroll do iOS (>1.0) não quebra o estado.
+    let found = -1
+    for (let i = chapters.length - 1; i >= 0; i--) {
+      const c = chapters[i]
       const midFadeIn = c.range[0] + (c.range[1] - c.range[0]) * 0.5
       const isLast = i === chapters.length - 1
-      return latest >= midFadeIn && (isLast ? latest <= c.range[3] : latest < c.range[3])
-    })
+      if (latest >= midFadeIn && (isLast || latest < c.range[3])) {
+        found = i
+        break
+      }
+    }
     setActiveIndex(found)
   })
 
   const bgAccentOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 0.06, 0.06, 0])
-  const hintOpacity     = useTransform(scrollYProgress, [0, 0.08], [1, 0])
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0])
 
   return (
     <div
       ref={containerRef}
       id="skills"
-      className="h-[450vh] md:h-[700vh]"
+      className="h-[600vh] md:h-[700vh]"
       style={{ touchAction: 'pan-y' }}
     >
       <div
