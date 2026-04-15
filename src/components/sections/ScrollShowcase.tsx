@@ -173,14 +173,14 @@ export default function ScrollShowcase() {
   const yRange: [number, number, number, number] = isMobile ? [24, 0, 0, -12] : [40, 0, 0, -28]
 
   useMotionValueEvent(scrollYProgress, 'change', latest => {
-    // Itera de trás pra frente: o chapter que está ENTRANDO vence durante sobreposição.
-    // Para o último chapter, sem limite superior — overscroll do iOS (>1.0) não quebra o estado.
     let found = -1
     for (let i = chapters.length - 1; i >= 0; i--) {
       const c = chapters[i]
+      // Mobile: ativa no início do fade-in (range[0]) — dispara mais cedo, sem esperar o midpoint
       const midFadeIn = c.range[0] + (c.range[1] - c.range[0]) * 0.5
+      const threshold = isMobile ? c.range[0] : midFadeIn
       const isLast = i === chapters.length - 1
-      if (latest >= midFadeIn && (isLast || latest < c.range[3])) {
+      if (latest >= threshold && (isLast || latest < c.range[3])) {
         found = i
         break
       }
@@ -195,7 +195,7 @@ export default function ScrollShowcase() {
     <div
       ref={containerRef}
       id="skills"
-      className="h-[600vh] md:h-[700vh]"
+      className="h-[900vh] md:h-[700vh]"
       style={{ touchAction: 'pan-y' }}
     >
       <div
