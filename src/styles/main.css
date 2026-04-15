@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* Dark mode via .dark class on <html> — único comando CSS necessário no v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Design tokens ─── */
+@theme {
+  /* Brand (estáticos) */
+  --color-brand:   oklch(0.62 0.22 240);
+  --color-accent:  oklch(0.70 0.18 195);
+  --color-glow:    oklch(0.78 0.20 200);
+  --color-purple:  oklch(0.60 0.20 290);
+
+  /* Semânticos — valor padrão (light); sobrescritos em .dark abaixo */
+  --color-bg:         oklch(0.97 0.006 245);
+  --color-surface:    oklch(1.00 0.00 0);
+  --color-surface2:   oklch(0.94 0.010 245);
+  --color-border:     oklch(0.88 0.010 265);
+  --color-foreground: oklch(0.12 0.020 265);
+  --color-muted:      oklch(0.45 0.050 265);
+
+  /* Tipografia */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ─── Tema dark ─── */
+.dark {
+  --color-bg:         oklch(0.07 0.025 265);
+  --color-surface:    oklch(0.12 0.020 265);
+  --color-surface2:   oklch(0.16 0.020 265);
+  --color-border:     oklch(0.22 0.030 265);
+  --color-foreground: oklch(0.95 0.010 265);
+  --color-muted:      oklch(0.65 0.030 265);
+}
+
+/* ─── Base global ─── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar customizada */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-brand);
+    border-radius: 3px;
+  }
+}
+
+/* ─── Utilitários customizados ─── */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-brand), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 20px oklch(from var(--color-brand) l c h / 0.35);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px oklch(from var(--color-accent) l c h / 0.35);
+  }
+
+  .glass {
+    background: oklch(from var(--color-surface) l c h / 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+  }
+
+  .glass-dark {
+    background: oklch(0.07 0.025 265 / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid oklch(0.22 0.030 265 / 0.6);
+  }
+}
