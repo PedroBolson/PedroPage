@@ -13,7 +13,7 @@ import {
   SiDocker, SiFramer, SiGithub, SiPrisma, SiNginx, SiTypeorm,
 } from 'react-icons/si'
 import { FaLinkedin, FaAws, FaAmazon } from 'react-icons/fa'
-import { TbApi, TbDatabase, TbBrandReactNative } from 'react-icons/tb'
+import { TbApi, TbDatabase, TbBrandReactNative, TbBolt } from 'react-icons/tb'
 import { BiCodeAlt } from 'react-icons/bi'
 import { SiDotnet } from 'react-icons/si'
 
@@ -66,6 +66,7 @@ export const skills: Skill[] = [
   // Bancos de dados
   { name: 'Firestore', icon: SiFirebase, color: '#FFA000', level: 'daily', category: 'databases' },
   { name: 'MySQL', icon: SiMysql, color: '#4479A1', level: 'daily', category: 'databases' },
+  { name: 'Convex', icon: TbBolt, color: '#EE342F', level: 'daily', category: 'databases' },
   { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791', level: 'projects', category: 'databases' },
   { name: 'MongoDB', icon: SiMongodb, color: '#47A248', level: 'exploring', category: 'databases' },
   { name: 'DynamoDB', icon: FaAmazon, color: '#FF9900', level: 'exploring', category: 'databases' },
