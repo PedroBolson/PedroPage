@@ -6,6 +6,7 @@ import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import ParticleBackground from '../effects/ParticleBackground'
 import { personal } from '../../data/portfolio'
+import { scrollToSection } from '../../utils/scroll'
 
 // Tipagem explícita como Variants resolve o conflito com o index signature do motion
 const containerVariants: Variants = {
@@ -14,7 +15,7 @@ const containerVariants: Variants = {
 }
 
 const lineVariants: Variants = {
-  hidden:  { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 }
 
@@ -99,6 +100,7 @@ export default function Hero() {
       {/* ── Seta de scroll ── */}
       <motion.a
         href="#skills"
+        onClick={(e) => { e.preventDefault(); scrollToSection('skills') }}
         className="absolute bottom-10 z-20 flex flex-col items-center gap-1 text-muted hover:text-brand transition-colors"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

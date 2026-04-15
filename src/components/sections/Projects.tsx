@@ -88,7 +88,7 @@ export default function Projects() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-accent transition-colors"
                       >
-                        <HiArrowTopRightOnSquare size={15} /> Demo
+                        <HiArrowTopRightOnSquare size={15} /> Ver Site
                       </a>
                     )}
                   </div>

@@ -25,7 +25,7 @@ export const personal = {
   name: 'Pedro Bolson',
   greeting: 'Olá, eu sou',
   title: 'Desenvolvedor Full Stack',
-  description: 'Criando soluções web inovadoras com foco em experiência de usuário e performance.',
+  description: 'Criando soluções web e mobile inovadoras com foco em experiência de usuário e performance.',
   github: 'https://github.com/PedroBolson',
   linkedin: 'https://www.linkedin.com/in/pedro-bolson-086a03337',
   email: '', // adicione seu e-mail quando quiser
@@ -91,6 +91,14 @@ export const projects: Project[] = [
   //   live: 'https://projeto.vercel.app',
   //   image: '/projects/nome-do-projeto.png',
   // },
+  {
+    title: 'UPEVA - União pela vida animal',
+    description: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Storage, Functions)'],
+    github: 'https://github.com/PedroBolson/Upeva',
+    live: 'https://upevapets.web.app',
+    image: '/assets/projects/upeva.png',
+  },
 ]
 
 // ─── Skills destacadas para o efeito TechFlying ───────────────────────────────

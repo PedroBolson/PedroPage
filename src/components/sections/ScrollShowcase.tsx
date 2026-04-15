@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useTheme } from '../../hooks/useTheme'
 import {
   motion,
   useScroll,
@@ -11,37 +12,34 @@ import { skills } from '../../data/portfolio'
 import type { SkillCategory } from '../../types'
 import Badge from '../ui/Badge'
 
-// ─── Capítulos do scroll story ─────────────────────────────────────────────────
+// ─── Dados dos capítulos ────────────────────────────────────────────────────────
 
 const CHAPTERS: {
   key: SkillCategory
   label: string
   subtitle: string
   accent: string
-  range: [number, number, number, number] // [fadeIn_start, fadeIn_end, fadeOut_start, fadeOut_end]
+  range: [number, number, number, number]
 }[] = [
-    //                                                                                    fadeIn       hold          fadeOut
-    { key: 'languages', label: 'Linguagens', subtitle: 'A base de tudo', accent: '#3b82f6', range: [0.00, 0.07, 0.20, 0.27] },  // hold: 13%
-    { key: 'frameworks', label: 'Frameworks', subtitle: 'Ferramentas do dia a dia', accent: '#06b6d4', range: [0.24, 0.31, 0.44, 0.51] },  // hold: 13%
-    { key: 'databases', label: 'Databases', subtitle: 'Onde os dados vivem', accent: '#a855f7', range: [0.48, 0.55, 0.68, 0.75] },  // hold: 13%
-    { key: 'devops', label: 'Cloud & DevOps', subtitle: 'Infraestrutura e escala', accent: '#f59e0b', range: [0.72, 0.79, 0.96, 1.00] },  // hold: 17%
+    { key: 'languages', label: 'Linguagens', subtitle: 'A base de tudo', accent: '#3b82f6', range: [0.00, 0.05, 0.22, 0.27] },
+    { key: 'frameworks', label: 'Frameworks', subtitle: 'Ferramentas do dia a dia', accent: '#06b6d4', range: [0.24, 0.29, 0.46, 0.51] },
+    { key: 'databases', label: 'Databases', subtitle: 'Onde os dados vivem', accent: '#a855f7', range: [0.48, 0.53, 0.70, 0.75] },
+    // xs/xe em ≤ 1.0 — View Timeline API exige offset em [0, 1]
+    // Persistência no fim do scroll é resolvida via isLast prop no Chapter
+    { key: 'devops', label: 'Cloud & DevOps', subtitle: 'Infraestrutura e escala', accent: '#f59e0b', range: [0.72, 0.77, 0.97, 1.00] },
   ]
 
 // ─── Indicador de progresso lateral ────────────────────────────────────────────
 
-function ProgressDots({
-  activeIndex,
-}: {
-  activeIndex: number
-}) {
+function ProgressDots({ activeIndex, isDark }: { activeIndex: number; isDark: boolean }) {
   return (
-    <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
+    <div className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3">
       {CHAPTERS.map((c, i) => (
         <div key={c.key} className="relative flex items-center justify-end gap-2">
           {activeIndex === i && (
             <motion.span
-              className="text-[10px] font-mono tracking-wider hidden md:block"
-              style={{ color: c.accent }}
+              className="text-xs font-mono tracking-wider hidden md:block font-semibold"
+              style={{ color: c.accent, filter: 'brightness(1.25)' }}
               initial={{ opacity: 0, x: 8 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 8 }}
@@ -54,7 +52,7 @@ function ProgressDots({
             animate={{
               width: activeIndex === i ? 8 : 5,
               height: activeIndex === i ? 8 : 5,
-              backgroundColor: activeIndex === i ? c.accent : 'rgba(255,255,255,0.25)',
+              backgroundColor: activeIndex === i ? c.accent : isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.18)',
             }}
             transition={{ duration: 0.3 }}
           />
@@ -64,88 +62,86 @@ function ProgressDots({
   )
 }
 
-// ─── Cada capítulo do scroll story ─────────────────────────────────────────────
+// ─── Capítulo (scroll-linked) ───────────────────────────────────────────────────
 
 function Chapter({
   chapter,
   scrollProgress,
   isActive,
+  yRange,
+  isLast,
 }: {
   chapter: typeof CHAPTERS[0]
   scrollProgress: MotionValue<number>
   isActive: boolean
+  yRange: [number, number, number, number]
+  isLast: boolean
 }) {
   const [rs, re, xs, xe] = chapter.range
   const chapterSkills = skills.filter(s => s.category === chapter.key)
 
-  // Transformações scroll-linked para o container do capítulo
-  const opacity = useTransform(scrollProgress, [rs, re, xs, xe], [0, 1, 1, 0])
-  const y = useTransform(scrollProgress, [rs, re, xs, xe], [40, 0, 0, -28])
+  // Último capítulo: mantém opacity=1 e y=0 ao chegar no fim do scroll
+  const opacityOut: [number, number, number, number] = isLast ? [0, 1, 1, 1] : [0, 1, 1, 0]
+  const yOut: [number, number, number, number] = isLast
+    ? [yRange[0], yRange[1], yRange[2], 0]
+    : yRange
 
-  // Zoom sutil de entrada no título
+  const opacity    = useTransform(scrollProgress, [rs, re, xs, xe], opacityOut)
+  const y          = useTransform(scrollProgress, [rs, re, xs, xe], yOut)
   const titleScale = useTransform(scrollProgress, [rs, re], [1.06, 1])
 
   return (
     <motion.div
       style={{ opacity, y }}
-      className="absolute inset-0 flex flex-col justify-center px-8 md:px-16 lg:px-24 pointer-events-none"
+      className="absolute inset-0 flex flex-col justify-center px-5 md:px-16 lg:px-24 pointer-events-none"
     >
-      {/* Subtitle / eyebrow */}
       <motion.p
         style={{ color: chapter.accent }}
-        className="font-mono text-xs md:text-sm tracking-[0.3em] uppercase mb-3"
+        className="font-mono text-[11px] md:text-sm tracking-[0.3em] uppercase mb-2 md:mb-3"
       >
         {chapter.subtitle}
       </motion.p>
 
-      {/* Título com zoom de entrada */}
       <motion.h2
         style={{ scale: titleScale }}
-        className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-10 origin-left"
-        css-gradient={chapter.accent}
+        className="text-4xl md:text-7xl lg:text-8xl font-black leading-none mb-6 md:mb-10 origin-left"
       >
-        <span
-          style={{
-            backgroundImage: `linear-gradient(120deg, white 30%, ${chapter.accent})`,
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
+        <span style={{
+          backgroundImage: `linear-gradient(120deg, var(--color-foreground) 30%, ${chapter.accent})`,
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}>
           {chapter.label}
         </span>
       </motion.h2>
 
-      {/* Cards com AnimatePresence + stagger — reagem a isActive */}
-      <div className="flex flex-wrap gap-3 max-w-3xl pointer-events-auto">
+      {/* Cards — pointer-events-auto para serem clicáveis dentro do layer pointer-events-none */}
+      <div className="flex flex-wrap gap-2 md:gap-3 max-w-3xl pointer-events-auto pr-8 md:pr-0">
         <AnimatePresence mode="popLayout">
-          {isActive &&
-            chapterSkills.map((skill, i) => {
-              const Icon = skill.icon
-              return (
-                <motion.div
-                  key={skill.name}
-                  layout
-                  initial={{ opacity: 0, y: 24, scale: 0.92 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -16, scale: 0.95 }}
-                  transition={{ duration: 0.35, delay: i * 0.05, ease: 'easeOut' }}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl backdrop-blur-sm border"
-                  style={{
-                    background: `${chapter.accent}12`,
-                    borderColor: `${chapter.accent}35`,
-                  }}
-                >
-                  <Icon size={22} style={{ color: skill.color, flexShrink: 0 }} />
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-semibold text-white leading-none">
-                      {skill.name}
-                    </span>
-                    <Badge level={skill.level} />
-                  </div>
-                </motion.div>
-              )
-            })}
+          {isActive && chapterSkills.map((skill, i) => {
+            const Icon = skill.icon
+            return (
+              <motion.div
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, y: 20, scale: 0.92 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -12, scale: 0.95 }}
+                transition={{ duration: 0.3, delay: i * 0.04, ease: 'easeOut' }}
+                className="flex items-center gap-2 md:gap-3 px-3 md:px-4 py-2 md:py-3 rounded-xl backdrop-blur-sm border"
+                style={{ background: `${chapter.accent}12`, borderColor: `${chapter.accent}35` }}
+              >
+                <Icon size={18} style={{ color: skill.color, flexShrink: 0 }} />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs md:text-sm font-semibold text-foreground leading-none">
+                    {skill.name}
+                  </span>
+                  <Badge level={skill.level} />
+                </div>
+              </motion.div>
+            )
+          })}
         </AnimatePresence>
       </div>
     </motion.div>
@@ -157,15 +153,19 @@ function Chapter({
 export default function ScrollShowcase() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(-1)
+  const { isDark } = useTheme()
+
+  // Calculado uma vez no render — CSR puro, window sempre disponível
+  const isMobile = window.matchMedia('(max-width: 767px)').matches
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   })
 
-  // Detecta qual capítulo está ativo — usa o ponto médio do fade-in como trigger
-  // `<= range[3]` no último capítulo evita o bug de boundary onde scrollYProgress=1.0
-  // faria a condição `< 1.00` falhar e sumir os badges abruptamente
+  // Paralaxe y reduzido no mobile — gesto de touch é mais curto e preciso
+  const yRange: [number, number, number, number] = isMobile ? [24, 0, 0, -12] : [40, 0, 0, -28]
+
   useMotionValueEvent(scrollYProgress, 'change', latest => {
     const found = CHAPTERS.findIndex((c, i) => {
       const midFadeIn = c.range[0] + (c.range[1] - c.range[0]) * 0.5
@@ -175,25 +175,40 @@ export default function ScrollShowcase() {
     setActiveIndex(found)
   })
 
-  // Cor de acento que interpola entre os capítulos (para o fundo)
   const bgAccentOpacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 0.06, 0.06, 0])
+  const hintOpacity    = useTransform(scrollYProgress, [0, 0.08], [1, 0])
 
   return (
-    /* Container de 700vh — mais scroll físico por capítulo = transição mais suave */
-    <div ref={containerRef} style={{ height: '700vh' }} id="scroll-showcase">
-      {/* Div sticky — fica visível durante todo o scroll do container */}
-      <div className="sticky top-0 h-screen overflow-hidden">
+    /*
+     * Container responsivo:
+     *   mobile  → 450vh  (~112vh por capítulo — breathing room confortável no touch)
+     *   desktop → 700vh  (hold longo, efeito Apple premium)
+     *
+     * touch-action: pan-y garante que o primeiro gesto de touch inicia scroll
+     * imediatamente, sem o browser iOS "engolir" o primeiro toque para decidir zoom.
+     */
+    <div
+      ref={containerRef}
+      id="skills"
+      className="h-[450vh] md:h-[700vh]"
+      style={{ touchAction: 'pan-y' }}
+    >
+      {/* Div sticky — usa 100dvh em vez de h-screen (100vh) para descontar
+          a barra do navegador iOS que aparece/some e causava o "salto" */}
+      <div
+        className="sticky top-0 overflow-hidden"
+        style={{ height: '100dvh' }}
+      >
+        {/* Fundo base — acompanha o tema */}
+        <div className="absolute inset-0 bg-bg" />
 
-        {/* Fundo escuro base */}
-        <div className="absolute inset-0 bg-[oklch(0.07_0.025_265)]" />
-
-        {/* Grid de circuito (tênue) */}
+        {/* Grid de circuito */}
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(59,130,246,0.06) 1px, transparent 1px),' +
-              'linear-gradient(90deg, rgba(59,130,246,0.06) 1px, transparent 1px)',
+              `linear-gradient(rgba(59,130,246,${isDark ? '0.06' : '0.10'}) 1px, transparent 1px),` +
+              `linear-gradient(90deg, rgba(59,130,246,${isDark ? '0.06' : '0.10'}) 1px, transparent 1px)`,
             backgroundSize: '80px 80px',
           }}
         />
@@ -220,42 +235,41 @@ export default function ScrollShowcase() {
           }}
         />
 
-        {/* Label de progresso topo */}
-        <div className="absolute top-8 left-8 md:left-16 flex items-center gap-3 z-20">
-          <span className="font-mono text-xs tracking-[0.25em] uppercase text-white/30">
+        {/* Label de progresso no topo */}
+        <div className="absolute top-6 md:top-8 left-5 md:left-16 flex items-center gap-3 z-20">
+          <span className="font-mono text-[10px] md:text-xs tracking-[0.25em] uppercase text-foreground/30">
             Tech Stack
           </span>
-          <div className="h-px w-12 bg-white/20" />
-          <span className="font-mono text-xs text-white/30">
+          <div className="h-px w-8 md:w-12 bg-foreground/20" />
+          <span className="font-mono text-[10px] md:text-xs text-foreground/30">
             {activeIndex >= 0 ? `${activeIndex + 1} / ${CHAPTERS.length}` : ''}
           </span>
         </div>
 
-        {/* Capítulos (sobrepostos, scroll-linked) */}
+        {/* Capítulos */}
         {CHAPTERS.map((chapter, i) => (
           <Chapter
             key={chapter.key}
             chapter={chapter}
             scrollProgress={scrollYProgress}
             isActive={activeIndex === i}
+            isLast={i === CHAPTERS.length - 1}
+            yRange={yRange}
           />
         ))}
 
-        {/* Indicador de progresso lateral */}
-        <ProgressDots activeIndex={activeIndex} />
+        <ProgressDots activeIndex={activeIndex} isDark={isDark} />
 
-        {/* Hint de scroll (só no início) */}
+        {/* Hint de scroll */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-          style={{
-            opacity: useTransform(scrollYProgress, [0, 0.08], [1, 0]),
-          }}
+          className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+          style={{ opacity: hintOpacity }}
         >
-          <span className="text-[10px] font-mono tracking-widest uppercase text-white/30">
+          <span className="text-[10px] font-mono tracking-widest uppercase text-foreground/30">
             scroll para explorar
           </span>
           <motion.div
-            className="w-px h-8 bg-white/20 origin-top"
+            className="w-px h-6 md:h-8 bg-foreground/20 origin-top"
             animate={{ scaleY: [1, 0.4, 1] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
           />

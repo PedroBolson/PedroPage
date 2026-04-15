@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { HiSun, HiMoon, HiBars3, HiXMark } from 'react-icons/hi2'
 import { useTheme } from '../../hooks/useTheme'
+import { scrollToSection } from '../../utils/scroll'
 
 const NAV_LINKS = [
   { label: 'Início', href: '#hero' },
@@ -23,6 +24,12 @@ export default function Header() {
 
   const closeMenu = () => setMenuOpen(false)
 
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    closeMenu()
+    scrollToSection(href.slice(1))
+  }
+
   return (
     <header
       className={[
@@ -35,6 +42,7 @@ export default function Header() {
         {/* Logo */}
         <motion.a
           href="#hero"
+          onClick={(e) => handleNav(e, '#hero')}
           className="font-mono font-bold text-xl text-gradient select-none"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -54,6 +62,7 @@ export default function Header() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNav(e, link.href)}
               className="text-sm font-medium text-muted hover:text-brand transition-colors duration-200"
             >
               {link.label}
@@ -113,7 +122,7 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={closeMenu}
+                  onClick={(e) => handleNav(e, link.href)}
                   className="py-2 text-sm font-medium text-muted hover:text-brand transition-colors"
                 >
                   {link.label}
