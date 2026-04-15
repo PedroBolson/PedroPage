@@ -6,7 +6,8 @@
     "contact": "Contact"
   },
   "hero": {
-    "scroll": "scroll"
+    "scroll": "scroll",
+    "skillsHint": "An interactive demo of my stack"
   },
   "showcase": {
     "label": "Tech Stack",

@@ -73,6 +73,16 @@ export default function Hero() {
             {t('personal.description')}
           </motion.p>
 
+          {/* Hint clicável: demo interativa */}
+          <motion.button
+            variants={lineVariants}
+            onClick={() => scrollToSection('skills')}
+            className="text-xs md:text-sm text-muted/70 mt-1 hover:text-brand transition-colors cursor-pointer"
+          >
+            <span className="text-brand mr-1.5">▶</span>
+            {t('hero.skillsHint')}
+          </motion.button>
+
           {/* CTAs */}
           <motion.div
             variants={lineVariants}
@@ -104,7 +114,7 @@ export default function Hero() {
       <motion.a
         href="#skills"
         onClick={(e) => { e.preventDefault(); scrollToSection('skills') }}
-        className="absolute bottom-10 z-20 flex flex-col items-center gap-1 text-muted hover:text-brand transition-colors"
+        className="absolute bottom-10 z-20 flex flex-col items-center gap-2 text-muted hover:text-brand transition-colors group"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.5 }}
@@ -116,6 +126,19 @@ export default function Hero() {
         >
           <HiArrowDown size={18} />
         </motion.div>
+
+        {/* 4 dots — uma por capítulo, pulsam em wave para sugerir a jornada */}
+        <div className="flex gap-1.5">
+          {(['#3b82f6', '#06b6d4', '#a855f7', '#f59e0b'] as const).map((color, i) => (
+            <motion.div
+              key={color}
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ backgroundColor: color }}
+              animate={{ scale: [1, 1.7, 1], opacity: [0.3, 0.85, 0.3] }}
+              transition={{ repeat: Infinity, duration: 2.2, delay: i * 0.38, ease: 'easeInOut' }}
+            />
+          ))}
+        </div>
       </motion.a>
     </section>
   )

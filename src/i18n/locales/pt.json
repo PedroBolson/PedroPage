@@ -6,7 +6,8 @@
     "contact": "Contato"
   },
   "hero": {
-    "scroll": "scroll"
+    "scroll": "scroll",
+    "skillsHint": "Uma demo interativa da minha stack"
   },
   "showcase": {
     "label": "Tech Stack",
