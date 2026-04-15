@@ -10,7 +10,7 @@ import {
   SiReact, SiNodedotjs, SiNestjs, SiVite, SiTailwindcss,
   SiGraphql, SiNextdotjs, SiGit,
   SiPostgresql, SiFirebase, SiMysql, SiMongodb,
-  SiDocker, SiFramer, SiGithub,
+  SiDocker, SiFramer, SiGithub, SiPrisma, SiNginx, SiTypeorm,
 } from 'react-icons/si'
 import { FaLinkedin, FaAws, FaAmazon } from 'react-icons/fa'
 import { TbApi, TbDatabase, TbBrandReactNative } from 'react-icons/tb'
@@ -58,20 +58,22 @@ export const skills: Skill[] = [
   { name: 'REST APIs', icon: TbApi, color: '#4ADE80', level: 'daily', category: 'frameworks' },
   { name: 'Framer Motion', icon: SiFramer, color: '#0055FF', level: 'daily', category: 'frameworks' },
   { name: 'Git', icon: SiGit, color: '#F05032', level: 'daily', category: 'frameworks' },
-  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF', level: 'projects', category: 'frameworks' },
+  { name: 'Prisma', icon: SiPrisma, color: '#2D3748', level: 'daily', category: 'frameworks' },
+  { name: 'TypeORM', icon: SiTypeorm, color: '#FE0803', level: 'projects', category: 'frameworks' },
   { name: 'NestJS', icon: SiNestjs, color: '#E0234E', level: 'projects', category: 'frameworks' },
   { name: 'GraphQL', icon: SiGraphql, color: '#E10098', level: 'exploring', category: 'frameworks' },
 
   // Bancos de dados
-  { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791', level: 'daily', category: 'databases' },
   { name: 'Firestore', icon: SiFirebase, color: '#FFA000', level: 'daily', category: 'databases' },
-  { name: 'MySQL', icon: SiMysql, color: '#4479A1', level: 'projects', category: 'databases' },
+  { name: 'MySQL', icon: SiMysql, color: '#4479A1', level: 'daily', category: 'databases' },
+  { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791', level: 'projects', category: 'databases' },
   { name: 'MongoDB', icon: SiMongodb, color: '#47A248', level: 'exploring', category: 'databases' },
   { name: 'DynamoDB', icon: FaAmazon, color: '#FF9900', level: 'exploring', category: 'databases' },
 
   // Cloud & DevOps
   { name: 'Firebase', icon: SiFirebase, color: '#FFCA28', level: 'daily', category: 'devops' },
   { name: 'AWS', icon: FaAws, color: '#FF9900', level: 'daily', category: 'devops' },
+  { name: 'NGINX', icon: SiNginx, color: '#009639', level: 'projects', category: 'devops' },
   { name: 'Docker', icon: SiDocker, color: '#2496ED', level: 'exploring', category: 'devops' },
 ]
 
