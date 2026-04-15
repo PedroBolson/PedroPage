@@ -17,18 +17,9 @@ function runCinematicScroll(sectionStart: number, sectionRange: number, fromY: n
 
   const isMobile = window.matchMedia('(hover: none)').matches
 
-  // ── Mobile: scroll nativo único até o fim — sem interrupções JS ────────
+  // ── Mobile: overlay tour (sem page scroll → sempre suave) ──────────────
   if (isMobile) {
-    const cancel = () => {
-      window.scrollTo({ top: window.scrollY, behavior: 'instant' as ScrollBehavior })
-      window.removeEventListener('touchstart', cancel)
-    }
-    setTimeout(() => {
-      if (window.scrollY < sectionStart + sectionRange)
-        window.addEventListener('touchstart', cancel, { once: true, passive: true })
-    }, 300)
-
-    window.scrollTo({ top: Math.round(sectionStart + sectionRange), behavior: 'smooth' })
+    window.dispatchEvent(new CustomEvent('skills-tour'))
     return
   }
 
