@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { HiSun, HiMoon, HiBars3, HiXMark } from 'react-icons/hi2'
 import { useTheme } from '../../hooks/useTheme'
@@ -10,6 +10,67 @@ const NAV_LINKS = [
   { label: 'Projetos', href: '#projects' },
   { label: 'Contato', href: '#contact' },
 ]
+
+const TOTAL_STEPS = 10 // "edro " (5) + "olson" (5)
+
+function getInner(count: number): { before: string; after: string } {
+  if (count === 0) return { before: 'PB', after: '' }
+  if (count <= 5)  return { before: 'P' + 'edro '.slice(0, count), after: 'B' }
+  return             { before: 'Pedro B' + 'olson'.slice(0, count - 5), after: '' }
+}
+
+function LogoText() {
+  const [hovered, setHovered] = useState(false)
+  const [count, setCount]     = useState(0)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+
+    if (hovered) {
+      intervalRef.current = setInterval(() => {
+        setCount(c => {
+          if (c >= TOTAL_STEPS) { clearInterval(intervalRef.current!); return c }
+          return c + 1
+        })
+      }, 60)
+    } else {
+      intervalRef.current = setInterval(() => {
+        setCount(c => {
+          if (c <= 0) { clearInterval(intervalRef.current!); return 0 }
+          return c - 1
+        })
+      }, 28)
+    }
+
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+  }, [hovered])
+
+  const { before, after } = getInner(count)
+  const isExpanded = count > 0
+
+  return (
+    <span
+      className="inline-flex items-baseline"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {'<'}
+      <span>{before}</span>
+      {isExpanded && (
+        <motion.span
+          className="text-brand"
+          animate={{ opacity: [1, 0, 1] }}
+          transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+        >
+          |
+        </motion.span>
+      )}
+      <span>{after}</span>
+      {' />'}
+    </span>
+  )
+}
 
 export default function Header() {
   const { isDark, toggle } = useTheme()
@@ -48,7 +109,7 @@ export default function Header() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {'<PB />'}
+          <LogoText />
         </motion.a>
 
         {/* Nav desktop */}

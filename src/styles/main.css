@@ -6,18 +6,18 @@
 /* ─── Design tokens ─── */
 @theme {
   /* Brand (estáticos) */
-  --color-brand:   oklch(0.62 0.22 240);
-  --color-accent:  oklch(0.70 0.18 195);
-  --color-glow:    oklch(0.78 0.20 200);
-  --color-purple:  oklch(0.60 0.20 290);
+  --color-brand: oklch(0.62 0.22 240);
+  --color-accent: oklch(0.70 0.18 195);
+  --color-glow: oklch(0.78 0.20 200);
+  --color-purple: oklch(0.60 0.20 290);
 
   /* Semânticos — valor padrão (light); sobrescritos em .dark abaixo */
-  --color-bg:         oklch(0.97 0.006 245);
-  --color-surface:    oklch(1.00 0.00 0);
-  --color-surface2:   oklch(0.94 0.010 245);
-  --color-border:     oklch(0.88 0.010 265);
+  --color-bg: oklch(0.97 0.006 245);
+  --color-surface: oklch(1.00 0.00 0);
+  --color-surface2: oklch(0.94 0.010 245);
+  --color-border: oklch(0.88 0.010 265);
   --color-foreground: oklch(0.12 0.020 265);
-  --color-muted:      oklch(0.45 0.050 265);
+  --color-muted: oklch(0.45 0.050 265);
 
   /* Tipografia */
   --font-sans: "Inter", system-ui, sans-serif;
@@ -26,12 +26,12 @@
 
 /* ─── Tema dark ─── */
 .dark {
-  --color-bg:         oklch(0.07 0.025 265);
-  --color-surface:    oklch(0.12 0.020 265);
-  --color-surface2:   oklch(0.16 0.020 265);
-  --color-border:     oklch(0.22 0.030 265);
+  --color-bg: oklch(0.07 0.025 265);
+  --color-surface: oklch(0.12 0.020 265);
+  --color-surface2: oklch(0.16 0.020 265);
+  --color-border: oklch(0.22 0.030 265);
   --color-foreground: oklch(0.95 0.010 265);
-  --color-muted:      oklch(0.65 0.030 265);
+  --color-muted: oklch(0.65 0.030 265);
 }
 
 /* ─── Base global ─── */
@@ -49,13 +49,19 @@
     overflow-x: hidden;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   /* Scrollbar customizada */
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: var(--color-bg);
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--color-brand);
     border-radius: 3px;

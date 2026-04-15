@@ -28,7 +28,7 @@ export const personal = {
   description: 'Criando soluções web e mobile inovadoras com foco em experiência de usuário e performance.',
   github: 'https://github.com/PedroBolson',
   linkedin: 'https://www.linkedin.com/in/pedro-bolson-086a03337',
-  email: '', // adicione seu e-mail quando quiser
+  email: 'pedbolson@gmail.com',
 }
 
 // ─── Redes sociais ─────────────────────────────────────────────────────────────
@@ -56,14 +56,14 @@ export const skills: Skill[] = [
   { name: 'React', icon: SiReact, color: '#61DAFB', level: 'daily', category: 'frameworks' },
   { name: 'React Native', icon: TbBrandReactNative, color: '#61DAFB', level: 'daily', category: 'frameworks' },
   { name: 'Node.js', icon: SiNodedotjs, color: '#339933', level: 'daily', category: 'frameworks' },
-  { name: 'NestJS', icon: SiNestjs, color: '#E0234E', level: 'projects', category: 'frameworks' },
   { name: 'Vite', icon: SiVite, color: '#646CFF', level: 'daily', category: 'frameworks' },
   { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', level: 'daily', category: 'frameworks' },
   { name: 'REST APIs', icon: TbApi, color: '#4ADE80', level: 'daily', category: 'frameworks' },
-  { name: 'Framer Motion', icon: SiFramer, color: '#0055FF', level: 'exploring', category: 'frameworks' },
-  { name: 'GraphQL', icon: SiGraphql, color: '#E10098', level: 'exploring', category: 'frameworks' },
-  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF', level: 'studying', category: 'frameworks' },
+  { name: 'Framer Motion', icon: SiFramer, color: '#0055FF', level: 'daily', category: 'frameworks' },
   { name: 'Git', icon: SiGit, color: '#F05032', level: 'daily', category: 'frameworks' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#FFFFFF', level: 'projects', category: 'frameworks' },
+  { name: 'NestJS', icon: SiNestjs, color: '#E0234E', level: 'projects', category: 'frameworks' },
+  { name: 'GraphQL', icon: SiGraphql, color: '#E10098', level: 'exploring', category: 'frameworks' },
 
   // Bancos de dados
   { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791', level: 'daily', category: 'databases' },
@@ -98,6 +98,14 @@ export const projects: Project[] = [
     github: 'https://github.com/PedroBolson/Upeva',
     live: 'https://upevapets.web.app',
     image: '/assets/projects/upeva.png',
+  },
+  {
+    title: 'Eco Recicla - Plataforma de Reciclagem Inteligente',
+    description: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO para faculdade.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
+    github: 'https://github.com/PedroBolson/Interface-Reciclagem',
+    live: 'https://recicla-caxias.web.app',
+    image: '/assets/projects/recicla.png',
   },
 ]
 

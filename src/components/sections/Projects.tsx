@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import { HiArrowTopRightOnSquare } from 'react-icons/hi2'
 import { SiGithub } from 'react-icons/si'
-import { projects } from '../../data/portfolio'
+import { projects, personal } from '../../data/portfolio'
 
 export default function Projects() {
   const hasProjects = projects.length > 0
@@ -112,7 +112,7 @@ export default function Projects() {
               Projetos chegando em breve. <br />
               Enquanto isso, confira meu{' '}
               <a
-                href="https://github.com/PedroBolson"
+                href={personal.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-brand hover:underline"
@@ -123,6 +123,30 @@ export default function Projects() {
             </p>
           </motion.div>
         )}
+
+        {/* CTA GitHub */}
+        <motion.div
+          className="text-center mt-14 flex flex-col items-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <p className="text-muted text-sm">
+            Conheça mais do meu trabalho
+          </p>
+          <motion.a
+            href={personal.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-surface border border-border text-foreground font-semibold text-sm hover:border-brand/50 hover:text-brand transition-all duration-300"
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <SiGithub size={18} />
+            Ver GitHub
+          </motion.a>
+        </motion.div>
 
       </div>
     </section>

@@ -52,7 +52,7 @@ function ProgressDots({ activeIndex, isDark }: { activeIndex: number; isDark: bo
             animate={{
               width: activeIndex === i ? 8 : 5,
               height: activeIndex === i ? 8 : 5,
-              backgroundColor: activeIndex === i ? c.accent : isDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.18)',
+              backgroundColor: activeIndex === i ? c.accent : isDark ? 'rgba(255,255,255,0.55)' : '#94a3b8',
             }}
             transition={{ duration: 0.3 }}
           />

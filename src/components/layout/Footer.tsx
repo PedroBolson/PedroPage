@@ -1,6 +1,33 @@
+import { motion } from 'motion/react'
 import { SiGithub } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import { personal } from '../../data/portfolio'
+
+function CoffeeCup() {
+  const wisp = (delay: number) => ({
+    animate: { opacity: [0, 0.55, 0] as number[], y: [0, -3, -6] as number[] },
+    transition: { duration: 2.2, repeat: Infinity, ease: 'easeInOut' as const, delay },
+  })
+
+  return (
+    <svg
+      viewBox="0 0 16 20"
+      width="14" height="17"
+      className="inline-block ml-0.5"
+      style={{ color: 'currentColor', verticalAlign: '0px' }}
+    >
+      {/* Fumaça */}
+      <motion.path d="M4 8C3 6 5 5 4 3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" {...wisp(0)} />
+      <motion.path d="M8 8C7 6 9 5 8 3" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" {...wisp(0.9)} />
+      {/* Borda da xícara */}
+      <rect x="1" y="8" width="10" height="1.5" rx="0.75" fill="currentColor" opacity="0.9" />
+      {/* Corpo */}
+      <path d="M1.5 9.5L1 19H11L10.5 9.5Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+      {/* Alça */}
+      <path d="M10.5 11C14 11 14 17 10.5 17" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -35,8 +62,9 @@ export default function Footer() {
         </div>
 
         <span className="text-xs text-muted">
-          Feito com React + Tailwind v4
+          Feito do zero, com café<CoffeeCup /> e TypeScript
         </span>
+
       </div>
     </footer>
   )
