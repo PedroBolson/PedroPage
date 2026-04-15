@@ -115,13 +115,12 @@ function ChapterView({
       </motion.h2>
 
       <div className="flex flex-wrap gap-2 md:gap-3 max-w-3xl pointer-events-auto pr-8 md:pr-0">
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence>
           {isActive && chapterSkills.map((skill, i) => {
             const Icon = skill.icon
             return (
               <motion.div
                 key={skill.name}
-                layout
                 initial={{ opacity: 0, y: 20, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -12, scale: 0.95 }}
