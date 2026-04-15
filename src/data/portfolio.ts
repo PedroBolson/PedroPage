@@ -72,7 +72,7 @@ export const skills: Skill[] = [
 
   // Cloud & DevOps
   { name: 'Firebase', icon: SiFirebase, color: '#FFCA28', level: 'daily', category: 'devops' },
-  { name: 'AWS', icon: FaAws, color: '#FF9900', level: 'daily', category: 'devops' },
+  { name: 'AWS', icon: FaAws, color: '#FF9900', level: 'projects', category: 'devops' },
   { name: 'NGINX', icon: SiNginx, color: '#009639', level: 'projects', category: 'devops' },
   { name: 'Docker', icon: SiDocker, color: '#2496ED', level: 'exploring', category: 'devops' },
 ]
