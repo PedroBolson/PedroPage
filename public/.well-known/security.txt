@@ -1,0 +1,3 @@
+Contact: mailto:pedbolson@gmail.com
+Preferred-Languages: pt, en
+Canonical: https://pedrobolson.com.br/.well-known/security.txt

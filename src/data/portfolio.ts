@@ -97,6 +97,18 @@ export const projects: Project[] = [
   //   image: '/projects/nome-do-projeto.png',
   // },
   {
+    title: 'LinksPilot - Encurtador de URLs',
+    descriptions: {
+      pt: 'Aplicativo para encurtar URLs de forma rápida e eficiente.',
+      en: 'Application to shorten URLs quickly and efficiently.',
+      es: 'Aplicación para acortar URLs de manera rápida y eficiente.',
+    },
+    tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
+    github: 'https://github.com/PedroBolson/Links-Pilot',
+    live: 'https://linkspilot.pedrobolson.com.br',
+    image: '/assets/projects/linkshortener.png',
+  },
+  {
     title: 'UPEVA - União pela vida animal',
     descriptions: {
       pt: 'Plataforma web para divulgação de animais, envio de candidaturas de adoção e operação interna da ONG - Ainda em desenvolvimento.',
