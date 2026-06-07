@@ -8,6 +8,8 @@ export interface Skill {
   icon: IconType
   /** Cor do ícone (hex ou css color) */
   color: string
+  /** Cor alternativa para modo claro (quando color tem baixo contraste em fundos claros) */
+  lightColor?: string
   level: SkillLevel
   category: SkillCategory
 }

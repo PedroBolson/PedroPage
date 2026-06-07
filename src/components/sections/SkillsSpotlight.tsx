@@ -57,39 +57,29 @@ export default function SkillsSpotlight() {
   const active = chapters[activeIndex]
   const displayed = chapters[displayIndex]
 
-  // ─── Badge stagger whenever displayed content changes ───────────────────────
+  // ─── Animation: reacts to activeIndex changes (from timer OR tab click) ──────
+  // Separating animation from state avoids nested setState + stale closure bugs.
+
+  const prevIndexRef = useRef(0)
 
   useEffect(() => {
-    if (prefersReduced || !panelRef.current) return
-    const badges = panelRef.current.querySelectorAll('[data-badge-item]')
-    gsap.fromTo(badges,
-      { opacity: 0, y: 10, scale: 0.94 },
-      {
-        opacity: 1, y: 0, scale: 1,
-        duration: 0.22, stagger: 0.04, ease: 'power2.out',
-        // Small delay on initial load, almost none on transitions (panel is transparent anyway)
-        delay: displayIndex === 0 ? 0.35 : 0.05,
-      }
-    )
-  }, [displayIndex, prefersReduced])
+    const prev = prevIndexRef.current
+    prevIndexRef.current = activeIndex
+    if (activeIndex === prev) return
 
-  // ─── Transition: exit → swap content (flushSync) → enter ───────────────────
-  // No preserve-3d — GSAP rotateY on a single div avoids all Safari 3D bugs.
-
-  const select = useCallback((next: number) => {
-    if (next === activeIndex) return
-    directionRef.current = next > activeIndex ? 1 : -1
-    setActiveIndex(next)
+    // Wrap-around (3→0) should feel like going forward
+    const isWrap = prev === CHAPTER_META.length - 1 && activeIndex === 0
+    const dir = (isWrap || activeIndex > prev) ? 1 : -1
+    directionRef.current = dir
 
     if (prefersReduced || !panelRef.current) {
-      setDisplayIndex(next)
+      setDisplayIndex(activeIndex)
       return
     }
 
+    const next = activeIndex
     gsap.killTweensOf(panelRef.current)
 
-    const dir = directionRef.current
-    // Exit: slide out to the left (forward) or right (backward), shrink + fade
     gsap.to(panelRef.current, {
       x: `${-14 * dir}%`,
       rotateY: 12 * dir,
@@ -99,7 +89,6 @@ export default function SkillsSpotlight() {
       ease: 'power2.in',
       onComplete: () => {
         flushSync(() => setDisplayIndex(next))
-        // Enter: slide in from opposite side
         gsap.fromTo(panelRef.current!,
           { x: `${14 * dir}%`, rotateY: -12 * dir, scale: 0.94, opacity: 0 },
           { x: '0%', rotateY: 0, scale: 1, opacity: 1, duration: 0.38, ease: 'power3.out' }
@@ -107,6 +96,24 @@ export default function SkillsSpotlight() {
       },
     })
   }, [activeIndex, prefersReduced])
+
+  // ─── Badge stagger whenever displayed content changes ───────────────────────
+
+  useEffect(() => {
+    if (prefersReduced || !panelRef.current) return
+    const badges = panelRef.current.querySelectorAll('[data-badge-item]')
+    gsap.fromTo(badges,
+      { opacity: 0, y: 10, scale: 0.94 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.22, stagger: 0.04, ease: 'power2.out', delay: 0.05 }
+    )
+  }, [displayIndex, prefersReduced])
+
+  // ─── Select: pure state update only, animation handled above ────────────────
+
+  const select = useCallback((next: number) => {
+    if (next === activeIndex) return
+    setActiveIndex(next)
+  }, [activeIndex])
 
   // ─── Dwell timer ────────────────────────────────────────────────────────────
 
@@ -127,20 +134,12 @@ export default function SkillsSpotlight() {
 
     if (timerRef.current) clearTimeout(timerRef.current)
     if (!isPausedRef.current) {
+      // Pure state update — no animation logic, no stale closures
       timerRef.current = setTimeout(() => {
-        setActiveIndex(prev => {
-          const next = (prev + 1) % CHAPTER_META.length
-          // Trigger full animated transition (must use ref-stored function to avoid stale closure)
-          selectRef.current(next)
-          return prev // select() calls setActiveIndex internally
-        })
+        setActiveIndex(prev => (prev + 1) % CHAPTER_META.length)
       }, remaining)
     }
   }, [prefersReduced])
-
-  // Keep a stable ref to select so the timer callback never goes stale
-  const selectRef = useRef(select)
-  useEffect(() => { selectRef.current = select }, [select])
 
   const pauseIfNeeded = useCallback(() => {
     if (isPausedRef.current || prefersReduced) return
@@ -328,7 +327,7 @@ export default function SkillsSpotlight() {
                       borderColor: `${displayed.accent}40`,
                     }}
                   >
-                    <Icon size={14} style={{ color: skill.color, flexShrink: 0 }} />
+                    <Icon size={14} style={{ color: isDark ? skill.color : (skill.lightColor ?? skill.color), flexShrink: 0 }} />
                     <div className="flex flex-col gap-0.5">
                       <span className="text-xs font-semibold text-foreground leading-none">
                         {skill.name}

@@ -10,7 +10,7 @@ import {
   SiReact, SiNodedotjs, SiNestjs, SiVite, SiTailwindcss,
   SiGraphql, SiNextdotjs, SiGit,
   SiPostgresql, SiFirebase, SiMysql, SiMongodb,
-  SiDocker, SiFramer, SiGithub, SiPrisma, SiNginx, SiTypeorm,
+  SiDocker, SiFramer, SiGithub, SiPrisma, SiNginx, SiTypeorm, SiGsap, SiExpo, SiExpress,
 } from 'react-icons/si'
 import { FaLinkedin, FaAws, FaAmazon } from 'react-icons/fa'
 import { TbApi, TbDatabase, TbBrandReactNative, TbBolt } from 'react-icons/tb'
@@ -41,7 +41,7 @@ export const socials: Social[] = [
 
 export const skills: Skill[] = [
   // Linguagens
-  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', level: 'daily', category: 'languages' },
+  { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', lightColor: '#9a7a00', level: 'daily', category: 'languages' },
   { name: 'TypeScript', icon: SiTypescript, color: '#3178C6', level: 'daily', category: 'languages' },
   { name: 'HTML & CSS', icon: SiHtml5, color: '#E34F26', level: 'daily', category: 'languages' },
   { name: 'SQL', icon: TbDatabase, color: '#336791', level: 'projects', category: 'languages' },
@@ -51,16 +51,21 @@ export const skills: Skill[] = [
 
   // Frameworks & Ferramentas
   { name: 'React', icon: SiReact, color: '#61DAFB', level: 'daily', category: 'frameworks' },
-  { name: 'React Native', icon: TbBrandReactNative, color: '#61DAFB', level: 'daily', category: 'frameworks' },
   { name: 'Node.js', icon: SiNodedotjs, color: '#339933', level: 'daily', category: 'frameworks' },
   { name: 'Vite', icon: SiVite, color: '#646CFF', level: 'daily', category: 'frameworks' },
   { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', level: 'daily', category: 'frameworks' },
   { name: 'REST APIs', icon: TbApi, color: '#4ADE80', level: 'daily', category: 'frameworks' },
+  { name: 'GSAP', icon: SiGsap, color: '#88CE02', lightColor: '#4a7200', level: 'daily', category: 'frameworks' },
   { name: 'Framer Motion', icon: SiFramer, color: '#0055FF', level: 'daily', category: 'frameworks' },
   { name: 'Git', icon: SiGit, color: '#F05032', level: 'daily', category: 'frameworks' },
   { name: 'Prisma', icon: SiPrisma, color: '#2D3748', level: 'daily', category: 'frameworks' },
+  { name: 'NestJS', icon: SiNestjs, color: '#E0234E', level: 'daily', category: 'frameworks' },
+  { name: 'Express.js', icon: SiExpress, color: '#888888', level: 'projects', category: 'frameworks' },
   { name: 'TypeORM', icon: SiTypeorm, color: '#FE0803', level: 'projects', category: 'frameworks' },
-  { name: 'NestJS', icon: SiNestjs, color: '#E0234E', level: 'projects', category: 'frameworks' },
+  { name: 'React Native', icon: TbBrandReactNative, color: '#61DAFB', level: 'exploring', category: 'frameworks' },
+  { name: 'NativeWind', icon: SiTailwindcss, color: '#38BDF8', level: 'exploring', category: 'frameworks' },
+  { name: 'Next.js', icon: SiNextdotjs, color: '#AAAAAA', lightColor: '#1a1a1a', level: 'exploring', category: 'frameworks' },
+  { name: 'Expo', icon: SiExpo, color: '#4630EB', level: 'exploring', category: 'frameworks' },
   { name: 'GraphQL', icon: SiGraphql, color: '#E10098', level: 'exploring', category: 'frameworks' },
 
   // Bancos de dados
