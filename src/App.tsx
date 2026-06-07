@@ -1,10 +1,9 @@
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
-import ScrollShowcase from './components/sections/ScrollShowcase'
+import SkillsSpotlight from './components/sections/SkillsSpotlight'
 import Projects from './components/sections/Projects'
 import Contact from './components/sections/Contact'
-import SkillsTourOverlay from './components/sections/SkillsTourOverlay'
 
 export default function App() {
   return (
@@ -13,13 +12,12 @@ export default function App() {
 
       <main>
         <Hero />
-        <ScrollShowcase />
+        <SkillsSpotlight />
         <Projects />
         <Contact />
       </main>
 
       <Footer />
-      <SkillsTourOverlay />
     </>
   )
 }

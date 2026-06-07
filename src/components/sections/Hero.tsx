@@ -73,16 +73,6 @@ export default function Hero() {
             {t('personal.description')}
           </motion.p>
 
-          {/* Hint clicável: demo interativa */}
-          <motion.button
-            variants={lineVariants}
-            onClick={() => scrollToSection('skills')}
-            className="text-xs md:text-sm text-muted/70 mt-1 hover:text-brand transition-colors cursor-pointer"
-          >
-            <span className="text-brand mr-1.5">▶</span>
-            {t('hero.skillsHint')}
-          </motion.button>
-
           {/* CTAs */}
           <motion.div
             variants={lineVariants}
