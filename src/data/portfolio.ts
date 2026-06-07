@@ -102,16 +102,16 @@ export const projects: Project[] = [
   //   image: '/projects/nome-do-projeto.png',
   // },
   {
-    title: 'LinksPilot - Encurtador de URLs',
+    title: 'ListsHub',
     descriptions: {
-      pt: 'Aplicativo para encurtar URLs de forma rápida e eficiente.',
-      en: 'Application to shorten URLs quickly and efficiently.',
-      es: 'Aplicación para acortar URLs de manera rápida y eficiente.',
+      pt: 'Plataforma de listas compartilhadas em tempo real para famílias. Conta com controle de acesso por papéis (titular, membro), sincronização ao vivo via Firestore, suporte a múltiplas famílias, PWA instalável e interface animada com Framer Motion.',
+      en: 'Real-time shared list platform for families. Features role-based access control (titular, member), live Firestore sync, multi-family support, installable PWA and polished animations with Framer Motion.',
+      es: 'Plataforma de listas compartidas en tiempo real para familias. Incluye control de acceso por roles (titular, miembro), sincronización en vivo con Firestore, soporte multi-familia, PWA instalable y animaciones con Framer Motion.',
     },
-    tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
-    github: 'https://github.com/PedroBolson/Links-Pilot',
-    live: 'https://linkspilot.pedrobolson.com.br',
-    image: '/assets/projects/linkshortener.png',
+    tech: ['React 19', 'TypeScript', 'Firebase', 'Tailwind CSS 4', 'Framer Motion', 'i18n', 'Vite'],
+    github: 'https://github.com/PedroBolson/Listas',
+    live: 'https://listshub.web.app',
+    image: '/assets/projects/listhub.png',
   },
   {
     title: 'UPEVA - União pela vida animal',
@@ -126,16 +126,16 @@ export const projects: Project[] = [
     image: '/assets/projects/upeva.png',
   },
   {
-    title: 'Eco Recicla - Plataforma de Reciclagem Inteligente',
+    title: 'LinksPilot - Encurtador de URLs',
     descriptions: {
-      pt: 'Plataforma web que gamifica o processo de reciclagem, permitindo que usuários ganhem pontos por ações sustentáveis - Projeto DEMO.',
-      en: 'Web platform that gamifies recycling, letting users earn points for sustainable actions - DEMO project.',
-      es: 'Plataforma web que gamifica el reciclaje, permitiendo que los usuarios ganen puntos por acciones sostenibles - Proyecto DEMO.',
+      pt: 'Aplicativo para encurtar URLs de forma rápida e eficiente.',
+      en: 'Application to shorten URLs quickly and efficiently.',
+      es: 'Aplicación para acortar URLs de manera rápida y eficiente.',
     },
     tech: ['React', 'TypeScript', 'Tailwind CSS 4', 'Firebase (Hosting, Firestore, Auth, Functions)'],
-    github: 'https://github.com/PedroBolson/Interface-Reciclagem',
-    live: 'https://recicla-caxias.web.app',
-    image: '/assets/projects/recicla.png',
+    github: 'https://github.com/PedroBolson/Links-Pilot',
+    live: 'https://linkspilot.pedrobolson.com.br',
+    image: '/assets/projects/linkshortener.png',
   },
 ]
 
